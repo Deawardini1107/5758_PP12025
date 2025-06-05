@@ -1,5 +1,5 @@
 package PrakPro1;
-o
+
 import java.sql.*;
 
 public class GraphDB {
