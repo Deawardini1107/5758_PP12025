@@ -11,7 +11,7 @@ public class GraphDB {
             return;
         }
         try (Connection conn = Database.connect()) {
-            if (gudangSudahAda(namaGudang, conn))
+            if (gudangSudahAda(namaGudang, conn)) {
                 System.out.println("Gudang \"" + namaGudang + "\" sudah ada!");
                 return;
             }
@@ -132,36 +132,8 @@ public class GraphDB {
         }
     }
 
-    // Hapus penerimaan tertentu
-    public void hapusPenerimaan(String dari, String ke) {
-        try (Connection conn = Database.connect()) {
-            String sql = "DELETE FROM penerimaan WHERE dari = ? AND ke = ?";
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, dari);
-                ps.setString(2, ke);
-                int affected = ps.executeUpdate();
-                if (affected > 0) {
-                    System.out.println("Penerimaan barang berhasil dihapus.");
-                } else {
-                    System.out.println("Penerimaan barang tidak ditemukan.");
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error hapusPenerimaan: " + e.getMessage());
-        }
-    }
-
-    // Cek apakah gudang sudah ada
-    private boolean gudangSudahAda(String nama, Connection conn) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM gudang WHERE nama = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, nama);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
-            }
-        }
-    }
     
+
     // Cek input kosong
     private boolean isEmpty(String s) {
         return s == null || s.trim().isEmpty();
